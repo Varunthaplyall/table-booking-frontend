@@ -1,4 +1,6 @@
+// app/myBookings/page.js
 "use client";
+
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import {
@@ -16,6 +18,7 @@ import {
 } from "@mui/material";
 import apiManager from "../services/apiManager";
 import toast from "react-hot-toast";
+import dynamic from "next/dynamic";
 
 // Create dark theme
 const darkTheme = createTheme({
@@ -31,6 +34,7 @@ const darkTheme = createTheme({
   },
 });
 
+// Separate BookingDetails into its own component
 const BookingDetails = ({ label, value }) => (
   <Typography variant="body1" gutterBottom>
     <Box component="span" fontWeight="bold" color="primary.main">
@@ -40,12 +44,20 @@ const BookingDetails = ({ label, value }) => (
   </Typography>
 );
 
-export default function Page() {
+// Wrap the main component with dynamic import
+const Page = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const fetchData = async () => {
       try {
         const res = await apiManager.fetchAllBookings();
@@ -62,7 +74,7 @@ export default function Page() {
     };
 
     fetchData();
-  }, []);
+  }, [mounted]);
 
   const handleDelete = async (id) => {
     try {
@@ -71,8 +83,12 @@ export default function Page() {
       toast.success("Booking deleted successfully");
     } catch (error) {
       console.error("Error deleting booking:", error);
+      toast.error("Failed to delete booking");
     }
   };
+
+  if (!mounted) return null;
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
@@ -152,7 +168,7 @@ export default function Page() {
                         ["ID", booking._id],
                         ["Name", booking.name],
                         ["Contact", booking.phoneNumber],
-                        ["Date", booking.date],
+                        ["Date", booking.date.split("T")[0]],
                         ["Time", booking.time],
                         ["Guests", booking.numberOfGuests],
                       ].map(([label, value]) => (
@@ -175,10 +191,16 @@ export default function Page() {
                   </Card>
                 </Grid>
               ))}
+              ;
             </Grid>
           )}
         </Container>
       </Box>
     </ThemeProvider>
   );
-}
+};
+
+// Export the component with dynamic import and SSR disabled
+export default dynamic(() => Promise.resolve(Page), {
+  ssr: false,
+});
