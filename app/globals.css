@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: rgb(255, 255, 255);
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.text-shadow-md {
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.custom-datetime-picker {
+  padding: 20px;
+  background-color: #121212 !important;
+  border-radius: 12px;
+  box-shadow: 0 0.1px 5px rgba(225, 225, 225, 0.3);
+  color: white;
+  font-size: larger;
+  width: 100%;
+  max-width: 600px;
+}
+
+.custom-datetime-picker .MuiTypography-root {
+  color: white;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.custom-datetime-picker .MuiPickersToolbar-root {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.custom-datetime-picker .MuiPickersDay-root {
+  color: white;
+}
+
+.custom-datetime-picker .MuiPickersDay-root:hover {
+  background-color: #333;
+}
+
+.custom-datetime-picker .MuiPickersDay-daySelected {
+  background-color: #4c6bfe;
+  color: white;
+}
+
+.custom-datetime-picker .MuiPickersDay-today {
+  background-color: #a28bc0;
+  color: black;
+}
+
+.custom-datetime-picker .MuiPickersArrowSwitcher-root {
+  color: white;
+}
+
+.custom-datetime-picker .MuiPickersArrowSwitcher-button {
+  color: white;
+}
+
+.custom-datetime-picker .MuiTypography-h6 {
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.custom-datetime-picker .MuiClockNumber-root {
+  color: white;
+}
