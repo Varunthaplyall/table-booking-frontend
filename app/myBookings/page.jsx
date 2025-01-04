@@ -1,6 +1,4 @@
 "use client";
-
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import {
@@ -43,7 +41,6 @@ const BookingDetails = ({ label, value }) => (
 );
 
 export default function Page() {
-  const searchParams = useSearchParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
